@@ -9,6 +9,8 @@ class Detail_Pesanan extends Model
 {
     use HasFactory;
 
+    protected $table = 'detail_pesanans';
+
     protected $fillable =[
         'pesanan_id',
         'menu_id',

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('menu_id')->constrained()->cascadeOnDelete();
-            $table->integer('nilai');
+            $table->decimal('nilai', 3, 1);
             $table->text('komentar');
             $table->timestamps();
         });

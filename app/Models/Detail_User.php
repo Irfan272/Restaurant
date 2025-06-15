@@ -9,7 +9,9 @@ class Detail_User extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $table = 'detail_users';
+
+    protected $fillable = [
         'user_id',
         'alamat',
         'no_hp',
@@ -17,7 +19,8 @@ class Detail_User extends Model
         'tanggal_lahir',
     ];
 
-    public function User(){
+    public function User()
+    {
         return $this->belongsTo(User::class);
     }
 
