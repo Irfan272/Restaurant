@@ -43,4 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    // Di User.php
+    public function detailUser()
+    {
+        return $this->hasOne(Detail_User::class);
+    }
+
 }

@@ -7,16 +7,53 @@ use App\Models\Meja;
 use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class PesananController extends Controller
 {
     public function index()
     {
-        $pesanans = Pesanan::with('User')->get();
-        return view("pesanan.index", compact("pesanans"));
+        // Ambil user yang sedang login
+        $user = Auth::guard('user')->user();
+
+        if ($user->role === 'Customer') {
+            $pesanans = Pesanan::with('User')
+                ->where('user_id', $user->id)
+                ->orderBy('tanggal_pesanan', 'desc')
+                ->orderBy('waktu_pesanan', 'desc')
+                ->get();
+
+            return view("pesanan.index", compact("pesanans"));
+        } else if ($user->role === 'Koki') {
+            $pesanans = Pesanan::with('User')
+                // ->where('jenis_pesanan', 'Delivery')
+                ->where('status', 'Processing')
+                ->orderBy('tanggal_pesanan', 'desc')
+                ->orderBy('waktu_pesanan', 'desc')
+                ->get();
+
+            return view("pesanan.index", compact("pesanans"));
+        } else if ($user->role === 'Pelayan') {
+            $pesanans = Pesanan::with('User')
+                ->where('jenis_pesanan', 'Delivery')
+                ->where('status', 'Delivered')
+                ->orderBy('tanggal_pesanan', 'desc')
+                ->orderBy('waktu_pesanan', 'desc')
+                ->get();
+
+            return view("pesanan.index", compact("pesanans"));
+        } else {
+            $pesanans = Pesanan::with('User')->orderBy('tanggal_pesanan', 'desc')
+                ->orderBy('waktu_pesanan', 'desc')
+                ->get();
+            return view("pesanan.index", compact("pesanans"));
+        }
+
+
     }
 
 
@@ -53,5 +90,14 @@ class PesananController extends Controller
 
 
         return view("pesanan.view", compact("pesanan"));
+    }
+
+    public function cetakStruk($id)
+    {
+        $pesanan = Pesanan::with(['user', 'detailPesanan.menu'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('pesanan.struk', compact('pesanan'))->setPaper('A4', 'portrait');
+
+        return $pdf->download('struk-pesanan-' . $pesanan->id . '.pdf');
     }
 }

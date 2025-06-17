@@ -25,9 +25,11 @@ class LoginController extends Controller
         if (Auth::guard('user')->attempt($credentials)) {
             $user = Auth::guard('user')->user();
     
-            if ($user->role === "Customer" || $user->role === "Admin" || $user->role === "Kasir" || $user->role === "Koki" || $user->role === "Pelayan" || $user->role === "Owner"  ) {
+            if ( $user->role === "Admin" || $user->role === "Kasir" || $user->role === "Koki" || $user->role === "Pelayan" || $user->role === "Owner"  ) {
                 // var_dump($user);
                 return redirect('/dashboard')->with('status', 'Berhasil Login');
+            }else if($user->role === "Customer"){
+                return redirect('/makanan')->with('status', 'Berhasil Login');
             }else {
                 Auth::guard('user')->logout();
                 return redirect('/')->withErrors(['role' => 'Role tidak valid'])->withInput();

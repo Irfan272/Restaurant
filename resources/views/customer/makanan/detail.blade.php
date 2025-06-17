@@ -66,8 +66,9 @@
                             <!-- Input jumlah -->
                             <div class="mb-3">
                                 <label>Jumlah Pesanan:</label>
-                                <input type="number" id="jumlah" class="form-control" value="1" min="1"
+                                <input type="number" id="jumlah-input" class="form-control" value="1" min="1"
                                     style="width: 100px;">
+                                   
                             </div>
 
                             <div class="">

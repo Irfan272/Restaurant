@@ -54,6 +54,7 @@
                                 <select class="form-control" disabled>
                                     <option value="Pending" {{ $pesanan->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="Processing" {{ $pesanan->status == 'Processing' ? 'selected' : '' }}>Processing</option>
+                                    <option value="Delivered" {{ $pesanan->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
                                     <option value="Completed" {{ $pesanan->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                                     <option value="Cancelled" {{ $pesanan->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                                 </select>

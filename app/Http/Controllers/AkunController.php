@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AkunController extends Controller
 {
 
     public function index()
     {
-        $akun = User::all();
+        $akun = User::whereIn('role', ['Admin', 'Kasir', 'Koki', 'Pelayan', 'Owner'])->get();
         return view('akun.index', compact('akun'));
     }
 

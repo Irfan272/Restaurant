@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Helpers;
 
 use Midtrans\Config;

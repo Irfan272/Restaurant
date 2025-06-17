@@ -40,6 +40,11 @@ Route::get('/akun/edit/{id}', [App\Http\Controllers\AkunController::class, 'edit
 Route::patch('/akun/update/{id}', [App\Http\Controllers\AkunController::class, 'update']);
 Route::delete('/akun/delete/{id}', [App\Http\Controllers\AkunController::class, 'delete']);
 
+// Customer
+Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index']);
+Route::get('/customer/edit/{id}', [App\Http\Controllers\CustomerController::class, 'edit']);
+Route::patch('/customer/update/{id}', [App\Http\Controllers\CustomerController::class, 'update']);
+
 // Category
 Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
 Route::get('/category/create', [App\Http\Controllers\CategoryController::class, 'create']);
@@ -62,6 +67,8 @@ Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'index'])
 Route::get('/pesanan/edit/{id}', [App\Http\Controllers\PesananController::class, 'edit']);
 Route::patch('/pesanan/update/{id}', [App\Http\Controllers\PesananController::class, 'update']);
 Route::get('/pesanan/view/{id}', [App\Http\Controllers\PesananController::class, 'view']);
+Route::get('/pesanan/{id}/cetak-struk', [App\Http\Controllers\PesananController::class, 'cetakStruk'])->name('pesanan.cetak');
+
 
 // Rating
 Route::get('/rating', [App\Http\Controllers\RatingController::class, 'index']);

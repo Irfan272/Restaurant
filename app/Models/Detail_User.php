@@ -19,9 +19,9 @@ class Detail_User extends Model
         'tanggal_lahir',
     ];
 
-    public function User()
+    // Di Detail_User.php
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

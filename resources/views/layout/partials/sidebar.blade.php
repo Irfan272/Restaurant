@@ -13,26 +13,38 @@
             <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                    @if (Auth::guard('user')->user()->role == 'Admin' || Auth::guard('user')->user()->role == 'Koki')
+                    @if (Auth::guard('user')->user()->role == 'Admin' ||
+                            Auth::guard('user')->user()->role == 'Koki' ||
+                            Auth::guard('user')->user()->role == 'Kasir' ||
+                            Auth::guard('user')->user()->role == 'Pelayan' ||
+                            Auth::guard('user')->user()->role == 'Owner')
                         <li><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a>
                     @endif
 
-                    <li><a href="/makanan"><i class="fa fa-cutlery"></i> Makanan</a>
-                    <li><a href="/minuman"><i class="fa fa-coffee"></i> Minuman</a>
-                    <li><a href="/order"><i class="fa fa-cart-plus"></i> Order</a>
-                    </li>
-                    @if (Auth::guard('user')->user()->role == 'Admin')
+                    @if (Auth::guard('user')->user()->role == 'Kasir' || Auth::guard('user')->user()->role == 'Customer')
+                        <li><a href="/makanan"><i class="fa fa-cutlery"></i> Makanan</a>
+                        <li><a href="/minuman"><i class="fa fa-coffee"></i> Minuman</a>
+                        <li><a href="/order"><i class="fa fa-cart-plus"></i> Order</a>
+                        </li>
+                    @endif
+                    @if (Auth::guard('user')->user()->role == 'Customer')
+                        <li><a href="/pesanan"><i class="fa fa-archive"></i> Pesanan</a>
+                        </li>
+                    @endif
+                    @if (Auth::guard('user')->user()->role == 'Admin' || Auth::guard('user')->user()->role == 'Kasir')
                         <li><a><i class="fa fa-tachometer"></i> Master Data <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
 
                                 <li><a href="/akun">Data Akun</a></li>
-                                <li><a href="/category">Data Category</a></li>
+                                <li><a href="/customer">Data Customer</a></li>
                                 <li><a href="/list-menu">Data Menu</a></li>
 
                             </ul>
                         </li>
                     @endif
-                    @if (Auth::guard('user')->user()->role == 'Admin' || Auth::guard('user')->user()->role == 'Koki')
+                    @if (Auth::guard('user')->user()->role == 'Kasir' ||
+                            Auth::guard('user')->user()->role == 'Koki' ||
+                            Auth::guard('user')->user()->role == 'Pelayan')
                         <li><a><i class="fa fa-desktop"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="/pesanan">Pesanan</a></li>
@@ -42,7 +54,7 @@
                             </ul>
                         </li>
                     @endif
-                    @if (Auth::guard('user')->user()->role == 'Admin' || Auth::guard('user')->user()->role == 'Owner')
+                    @if (Auth::guard('user')->user()->role == 'Owner')
                         <li><a><i class="fa fa-file"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="/laporan-penjualan">Laporan Penjualan</a></li>

@@ -40,13 +40,19 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Customer</th>
+                                                @if (Auth::guard('user')->user()->role === 'Pelayan')
+                                                    <th>Alamat</th>
+                                                    <th>Customer</th>
+                                                @endif
                                                 <th>Tanggal</th>
                                                 <th>Waktu</th>
                                                 <th>Jenis Pesanan</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Metode Pembayaran</th>
-                                                <th>Uang Diterima</th>
+                                                @if (Auth::guard('user')->user()->role != 'Pelayan')
+                                                    <th>Metode Pembayaran</th>
+                                                    <th>Uang Diterima</th>
+                                                @endif
                                                 <th>Catatan</th>
                                                 <th style="width: 20%">Action</th>
                                             </tr>
@@ -68,14 +74,22 @@
                                                         case 'Cancelled':
                                                             $rowClass = 'table-danger';
                                                             break;
+                                                        case 'Delivered':
+                                                            $rowClass = 'table-info'; // Warna biru muda
+                                                            break;
                                                         default:
                                                             $rowClass = '';
                                                     }
                                                 @endphp
 
+
                                                 <tr class="{{ $rowClass }}">
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $pesanan->user->name }}</td>
+                                                    @if (Auth::guard('user')->user()->role === 'Pelayan')
+                                                        <td>{{ $pesanan->user->detailUser->alamat }}</td>
+                                                        <td>{{ $pesanan->user->detailUser->no_hp }}</td>
+                                                    @endif
                                                     <td>{{ $pesanan->tanggal_pesanan }}</td>
                                                     <td>{{ $pesanan->waktu_pesanan }}</td>
                                                     <td>{{ $pesanan->jenis_pesanan }}</td>
@@ -85,8 +99,12 @@
                                                     </td>
 
                                                     <td>Rp {{ number_format($pesanan->total_pesanan, 0, ',', '.') }}</td>
-                                                    <td>{{ $pesanan->metode_pembayaran }}</td>
-                                                    <td>Rp {{ number_format($pesanan->uang_diterima, 0, ',', '.') }}</td>
+                                                    @if (Auth::guard('user')->user()->role != 'Pelayan')
+                                                        <td>{{ $pesanan->metode_pembayaran }}</td>
+                                                        <td>Rp {{ number_format($pesanan->uang_diterima, 0, ',', '.') }}
+                                                        </td>
+                                                    @endif
+
                                                     <td>{{ $pesanan->catatan }}</td>
 
                                                     <td style="text-align: left">
@@ -94,10 +112,17 @@
                                                             class="btn btn-info btn-xs">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <a href="/pesanan/edit/{{ $pesanan->id }}"
-                                                            class="btn btn-warning btn-xs">
-                                                            <i class="fa fa-pencil"></i>
+                                                        @if (Auth::guard('user')->user()->role != 'Customer')
+                                                            <a href="/pesanan/edit/{{ $pesanan->id }}"
+                                                                class="btn btn-warning btn-xs">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        @endif
+                                                        <a href="{{ route('pesanan.cetak', $pesanan->id) }}"
+                                                            class="btn btn-primary" target="_blank">
+                                                            <i class="fa fa-download"></i>
                                                         </a>
+
                                                     </td>
                                                 </tr>
                                             @endforeach

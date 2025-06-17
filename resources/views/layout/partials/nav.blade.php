@@ -17,6 +17,13 @@
                         <h6 class="mb-0 text-gray-600">Welcome, {{ Auth::guard('user')->user()->name }}</h6>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                        @if(Auth::guard('user')->user()->role == 'Customer')
+                            <!-- Link ke profil -->
+                        <a class="dropdown-item" href="customer/edit/{{ Auth::guard('user')->user()->id }}">
+                            <i class="fa fa-user pull-left"></i> Profil Saya
+                        </a>
+                        @endif
+                        
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> Log
