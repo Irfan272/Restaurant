@@ -21,10 +21,24 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="login">
     <div>
+
+        {{-- @if (session('status'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('status') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif --}}
+
+        {{-- Alert Success dari session --}}
+
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -82,6 +96,34 @@
             </div>
         </div>
     </div>
+
+    {{-- SweetAlert for success --}}
+    @if (session('success') && session('redirect_to'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+                text: 'Anda akan diarahkan...',
+                showConfirmButton: false,
+                timer: 1800,
+                timerProgressBar: true
+            }).then(() => {
+                window.location.href = "{{ session('redirect_to') }}";
+            });
+        </script>
+    @endif
+
+    {{-- SweetAlert for error --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Login',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
 </body>
+
 
 </html>

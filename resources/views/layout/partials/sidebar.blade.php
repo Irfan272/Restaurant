@@ -1,8 +1,23 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0; margin-top:10px;">
-            <a href="/dashboard" class="site_title"><img src="{{ asset('assets/Logo.png') }}" style="width: 70px"
-                    height="auto"><span class="pl-2">E-KASIR </span></a>
+            @if (Auth::guard('user')->user()->role == 'Admin')
+                <a href="/dashboard" class="site_title"><img src="{{ asset('assets/Logo.png') }}" style="width: 70px"
+                        height="auto"><span class="pl-2">E-KASIR </span></a>
+            @endif
+
+            @if (Auth::guard('user')->user()->role == 'Customer' ||
+                    Auth::guard('user')->user()->role == 'Koki' ||
+                    Auth::guard('user')->user()->role == 'Kasir' ||
+                    Auth::guard('user')->user()->role == 'Pelayan' ||
+                    Auth::guard('user')->user()->role == 'Owner')
+                <a @if (Auth::guard('user')->user()->role != 'Customer') href="/dashboard" @endif class="site_title"><img
+                        src="{{ asset('assets/Logo.png') }}" style="width: 70px" height="auto"><span class="pl-2"
+                        style="font-size: 14px;">GEPREK BANGBRE</span>
+                </a>
+            @endif
+
+
         </div>
 
         <div class="clearfix"></div>

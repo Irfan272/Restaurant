@@ -7,39 +7,49 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('login');
     }
 
-    public function login(Request $request){
+   public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|string|max:50',
             'password' => 'required|string|max:50',
         ], [
-            'email.required' => 'email wajib diisi',
+            'email.required' => 'Email wajib diisi',
             'password.required' => 'Password wajib diisi',
         ]);
-    
+
         $credentials = $request->only('email', 'password');
-    
+
         if (Auth::guard('user')->attempt($credentials)) {
             $user = Auth::guard('user')->user();
-    
-            if ( $user->role === "Admin" || $user->role === "Kasir" || $user->role === "Koki" || $user->role === "Pelayan" || $user->role === "Owner"  ) {
-                // var_dump($user);
-                return redirect('/dashboard')->with('status', 'Berhasil Login');
-            }else if($user->role === "Customer"){
-                return redirect('/makanan')->with('status', 'Berhasil Login');
-            }else {
+
+            $redirectTo = match ($user->role) {
+                'Admin', 'Kasir', 'Koki', 'Pelayan', 'Owner' => '/dashboard',
+                'Customer' => '/makanan',
+                default => null,
+            };
+
+            if ($redirectTo) {
+                return redirect('/')->with([
+                    'success' => 'Berhasil Login',
+                    'redirect_to' => $redirectTo,
+                ]);
+            } else {
                 Auth::guard('user')->logout();
                 return redirect('/')->withErrors(['role' => 'Role tidak valid'])->withInput();
             }
         } else {
-            return redirect('/')->withErrors(['auth' => 'email atau Password Salah'])->withInput();
+            return redirect('/')->with('error', 'Email atau Password salah')->withInput();
         }
     }
 
-    public function logout(){
+
+    public function logout()
+    {
         Auth::logout();
 
         request()->session()->invalidate();

@@ -6,7 +6,17 @@
     <div class="right_col" role="main">
         <div class="col-lg-12">
             <div class="top_tiles">
-                <h1 class="text-center mb-4">Selamat Datang Di <strong>E-KASIR</strong></h1>
+                <h1 class="text-center mb-4">Selamat Datang Di <strong>
+                        @if (Auth::guard('user')->user()->role == 'Admin')
+                            E-KASIR
+                        @endif
+                        @if (   Auth::guard('user')->user()->role == 'Koki' ||
+                                Auth::guard('user')->user()->role == 'Kasir' ||
+                                Auth::guard('user')->user()->role == 'Pelayan' ||
+                                Auth::guard(name: 'user')->user()->role == 'Owner')
+                            AYAM GEPREK BANGBRE
+                        @endif
+                    </strong></h1>
                 <div class="row justify-content-center">
 
                     <!-- Pesanan Selesai -->
