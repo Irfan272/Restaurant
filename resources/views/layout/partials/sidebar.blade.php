@@ -32,6 +32,20 @@
             <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
+                    @if (!Auth::guard('user')->check())
+                        {{-- Belum login --}}
+                        <li><a href="/"><i class="fa fa-home"></i> Dashboard</a></li>
+                    @else
+                        {{-- Sudah login, cek apakah role-nya Customer --}}
+                        @php $role = Auth::guard('user')->user()->role; @endphp
+
+                        @if ($role === 'Customer')
+                            <li><a href="/"><i class="fa fa-home"></i> Dashboard</a></li>
+                        @endif
+                    @endif
+
+
+
                     @if (Auth::guard('user')->check())
                         @php $role = Auth::guard('user')->user()->role; @endphp
 
@@ -42,16 +56,14 @@
 
                     {{-- ✅ Ini ditampilkan untuk Kasir, Customer, dan Guest (belum login) --}}
                     @if (
-                        (Auth::guard('user')->check() && in_array(Auth::guard('user')->user()->role, ['Kasir', 'Customer']))
-                        || !Auth::guard('user')->check()
-                    )
-                        <li><a href="/"><i class="fa fa-cutlery"></i> Makanan</a></li>
+                        (Auth::guard('user')->check() && in_array(Auth::guard('user')->user()->role, ['Kasir', 'Customer'])) ||
+                            !Auth::guard('user')->check())
+                        <li><a href="/makanan"><i class="fa fa-cutlery"></i> Makanan</a></li>
                         <li><a href="/minuman"><i class="fa fa-coffee"></i> Minuman</a></li>
-               
                     @endif
 
-                    @if (Auth::guard('user')->check() && 
-                    (Auth::guard('user')->user()->role == 'Kasir' || Auth::guard('user')->user()->role == 'Customer'))
+                    @if (Auth::guard('user')->check() &&
+                            (Auth::guard('user')->user()->role == 'Kasir' || Auth::guard('user')->user()->role == 'Customer'))
                         <li><a href="/order"><i class="fa fa-cart-plus"></i> Order</a></li>
                     @endif
 
@@ -59,7 +71,7 @@
                         <li><a href="/pesanan"><i class="fa fa-archive"></i> Pesanan</a></li>
                     @endif
 
-                    @if (Auth::guard('user')->check() && in_array($role, ['Admin', 'Kasir']))
+                    @if (Auth::guard('user')->check() && in_array($role, ['Admin']))
                         <li><a><i class="fa fa-tachometer"></i> Master Data <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="/akun">Data Akun</a></li>

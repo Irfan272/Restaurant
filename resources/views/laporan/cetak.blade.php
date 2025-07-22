@@ -30,7 +30,8 @@
             font-size: 10px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #000;
             padding: 8px;
             text-align: center;
@@ -83,6 +84,7 @@
     <main>
         <p class="text-center">Periode: {{ $tanggal_mulai }} - {{ $tanggal_terakhir }}</p>
         <p>Total Pesanan: {{ $total }}</p>
+        {{-- <p>Total Pendapatan: {{ $jumlah_total }}</p> --}}
         <p>Tanggal Cetak: {{ $tanggal_cetak }}</p>
 
         <table>
@@ -127,6 +129,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="text-right mt-4">
+            <h4><strong>Total Pendapatan: </strong>Rp {{ number_format($jumlah_total, 0, ',', '.') }}</h4>
+        </div>
     </main>
 </body>
 

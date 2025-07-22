@@ -23,9 +23,10 @@ class LaporanController extends Controller
             ->get();
 
         $total = $pesanan->count();
+        $jumlah_total = $pesanan->sum('total_pesanan');
         $tanggal_cetak = Carbon::today()->format('d-m-Y');
 
-        return view('laporan.cetak', compact('pesanan', 'total', 'tanggal_mulai', 'tanggal_terakhir', 'tanggal_cetak'));
+        return view('laporan.cetak', compact('pesanan', 'jumlah_total','total', 'tanggal_mulai', 'tanggal_terakhir', 'tanggal_cetak'));
     }
 
 }

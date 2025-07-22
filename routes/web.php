@@ -31,6 +31,7 @@ Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])-
 
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'indexCustomer']);
 
 // Akun
 Route::get('/akun', [App\Http\Controllers\AkunController::class, 'index']);
@@ -77,7 +78,7 @@ Route::post('/rating/store', [App\Http\Controllers\RatingController::class, 'sto
 
 
 // Customer Makanan
-Route::get('/', [App\Http\Controllers\MakananController::class, 'index']);
+Route::get('/makanan', [App\Http\Controllers\MakananController::class, 'index']);
 Route::get('/makanan/detail/{id}', [App\Http\Controllers\MakananController::class, 'detail']);
 
 // Customer Minuman
