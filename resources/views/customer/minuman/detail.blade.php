@@ -1,13 +1,13 @@
 @extends('layout.master')
 
-@section('title', 'Detail Makanan')
+@section('title', 'Detail Minuman')
 
 @section('content')
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Makanan :: {{ $menu->nama_menu }}</h3>
+                <h3>Minuman :: {{ $menu->nama_menu }}</h3>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Makanan :: {{ $menu->nama_menu }}</h2>
+                        <h2>Minuman :: {{ $menu->nama_menu }}</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -71,10 +71,17 @@
                             </div>
 
                             <div class="">
+                                @if (Auth::guard('user')->check())
                                 <a href="javascript:void(0);" class="btn btn-success btn-lg tambah-ke-keranjang"
                                     data-id="{{ $menu->id }}">
                                     <i class="fa fa-cart-plus"></i> Tambah Pesanan
                                 </a>
+                                @else
+                                <a href="{{ route('login') }}" class="btn btn-success btn-lg"
+                                    ">
+                                    <i class="fa fa-cart-plus"></i> Login Untuk Memesan
+                                </a>
+                                @endif
                             </div>
                         </div>
 

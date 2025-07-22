@@ -8,13 +8,13 @@
             <div class="top_tiles">
                 <h1 class="text-center mb-4">Selamat Datang Di <strong>
                         @if (Auth::guard('user')->user()->role == 'Admin')
-                            E-KASIR
+                            KEDAI GEPREK BANGBRE
                         @endif
                         @if (   Auth::guard('user')->user()->role == 'Koki' ||
                                 Auth::guard('user')->user()->role == 'Kasir' ||
                                 Auth::guard('user')->user()->role == 'Pelayan' ||
                                 Auth::guard(name: 'user')->user()->role == 'Owner')
-                            AYAM GEPREK BANGBRE
+                           KEDAI GEPREK BANGBRE
                         @endif
                     </strong></h1>
                 <div class="row justify-content-center">

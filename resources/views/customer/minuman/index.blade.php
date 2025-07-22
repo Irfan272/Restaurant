@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Detail Makanan')
+@section('title', 'Detail Minuman')
 
 @section('content')
 
@@ -8,7 +8,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Menu Makanan</h3>
+                <h3>Menu Minuman</h3>
             </div>
         </div>
 
@@ -72,14 +72,22 @@
                                             </div>
 
                                             <div class="d-flex justify-content-center gap-2">
-                                                <a href="/makanan/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
+                                                <a href="/minuman/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
+                                                @if (Auth::guard('user')->check())
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-outline-success btn-sm tambah-ke-keranjang"
                                                     data-id="{{ $item->id }}" title="Tambah Pesanan">
-                                                    <i class="fa fa-cart-plus"></i> 
+                                                    <i class="fa fa-cart-plus"></i>
                                                 </a>
+                                            @else
+                                                <a href="{{ route('login') }}"
+                                                    class="btn btn-outline-success btn-sm"
+                                                    title="Login untuk memesan">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            @endif
                                             </div>
                                         </div>
                                     </div>
@@ -137,14 +145,22 @@
                                             </div>
 
                                             <div class="d-flex justify-content-center gap-2">
-                                                <a href="/makanan/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
+                                                <a href="/minuman/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
+                                                @if (Auth::guard('user')->check())
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-outline-success btn-sm tambah-ke-keranjang"
                                                     data-id="{{ $item->id }}" title="Tambah Pesanan">
                                                     <i class="fa fa-cart-plus"></i>
                                                 </a>
+                                            @else
+                                                <a href="{{ route('login') }}"
+                                                    class="btn btn-outline-success btn-sm"
+                                                    title="Login untuk memesan">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            @endif
                                             </div>
                                         </div>
                                     </div>

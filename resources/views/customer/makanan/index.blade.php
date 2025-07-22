@@ -75,11 +75,20 @@
                                                 <a href="/makanan/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
+                                                @if (Auth::guard('user')->check())
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-outline-success btn-sm tambah-ke-keranjang"
                                                     data-id="{{ $item->id }}" title="Tambah Pesanan">
-                                                    <i class="fa fa-cart-plus"></i> 
+                                                    <i class="fa fa-cart-plus"></i>
                                                 </a>
+                                            @else
+                                                <a href="{{ route('login') }}"
+                                                    class="btn btn-outline-success btn-sm"
+                                                    title="Login untuk memesan">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            @endif
+                                            
                                             </div>
                                         </div>
                                     </div>
@@ -140,11 +149,20 @@
                                                 <a href="/makanan/detail/{{ $item->id }}" class="btn btn-outline-primary btn-sm" title="Lihat Detail">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
+                                                @if (Auth::guard('user')->check())
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-outline-success btn-sm tambah-ke-keranjang"
                                                     data-id="{{ $item->id }}" title="Tambah Pesanan">
                                                     <i class="fa fa-cart-plus"></i>
                                                 </a>
+                                            @else
+                                                <a href="{{ route('login') }}"
+                                                    class="btn btn-outline-success btn-sm"
+                                                    title="Login untuk memesan">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            @endif
+                                            
                                             </div>
                                         </div>
                                     </div>

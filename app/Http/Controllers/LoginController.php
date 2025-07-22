@@ -29,21 +29,21 @@ class LoginController extends Controller
 
             $redirectTo = match ($user->role) {
                 'Admin', 'Kasir', 'Koki', 'Pelayan', 'Owner' => '/dashboard',
-                'Customer' => '/makanan',
+                'Customer' => '/',
                 default => null,
             };
 
             if ($redirectTo) {
-                return redirect('/')->with([
+                return redirect($redirectTo)->with([
                     'success' => 'Berhasil Login',
                     'redirect_to' => $redirectTo,
                 ]);
             } else {
                 Auth::guard('user')->logout();
-                return redirect('/')->withErrors(['role' => 'Role tidak valid'])->withInput();
+                return redirect('/login')->withErrors(['role' => 'Role tidak valid'])->withInput();
             }
         } else {
-            return redirect('/')->with('error', 'Email atau Password salah')->withInput();
+            return redirect('/login')->with('error', 'Email atau Password salah')->withInput();
         }
     }
 
@@ -55,6 +55,6 @@ class LoginController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

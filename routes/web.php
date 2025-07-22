@@ -20,7 +20,7 @@ use App\Http\Controllers\MenuController;
 
 // Login
 
-Route::get('/', [App\Http\Controllers\LoginController::class, 'index'])->name('showlogin');
+Route::get('/login', [App\Http\Controllers\LoginController::class, 'index'])->name('showlogin');
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -77,7 +77,7 @@ Route::post('/rating/store', [App\Http\Controllers\RatingController::class, 'sto
 
 
 // Customer Makanan
-Route::get('/makanan', [App\Http\Controllers\MakananController::class, 'index']);
+Route::get('/', [App\Http\Controllers\MakananController::class, 'index']);
 Route::get('/makanan/detail/{id}', [App\Http\Controllers\MakananController::class, 'detail']);
 
 // Customer Minuman
@@ -96,4 +96,3 @@ Route::get('/laporan-penjualan', [App\Http\Controllers\LaporanController::class,
 Route::get('/cetak-laporan-penjualan/{tanggal_awal}/{tanggal_akhir}', [App\Http\Controllers\LaporanController::class, 'printPenjualan']);
 
 Route::get('/get-penjualan-data', [App\Http\Controllers\LaporanController::class, 'getPengirimanData']);
-

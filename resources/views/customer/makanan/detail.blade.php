@@ -72,10 +72,17 @@
                             </div>
 
                             <div class="">
+                                @if (Auth::guard('user')->check())
                                 <a href="javascript:void(0);" class="btn btn-success btn-lg tambah-ke-keranjang"
                                     data-id="{{ $menu->id }}">
                                     <i class="fa fa-cart-plus"></i> Tambah Pesanan
                                 </a>
+                                @else
+                                <a href="{{ route('login') }}" class="btn btn-success btn-lg"
+                                    ">
+                                    <i class="fa fa-cart-plus"></i> Login Untuk Memesan
+                                </a>
+                                @endif
                             </div>
                         </div>
 
