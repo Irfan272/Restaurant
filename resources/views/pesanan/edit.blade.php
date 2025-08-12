@@ -21,33 +21,44 @@
                                 @csrf
                                 @method('PATCH')
 
-                                <div class="form-group">
-                                    <label>Customer</label>
-                                    <input type="text" class="form-control" value="{{ $pesanan->user->name }}" readonly>
-                                </div>
+                                {{-- Tampilkan data sesuai jenis_pesanan --}}
+                                @if ($pesanan->jenis_pesanan == 'Dine In')
+                                    <div class="form-group">
+                                        <label>Nomor Meja</label>
+                                        <input type="text" class="form-control" value="{{ $pesanan->nomor_meja }}" readonly>
+                                    </div>
+                                @elseif ($pesanan->jenis_pesanan == 'Take Away')
+                                    <div class="form-group">
+                                        <label>Nama Pelanggan</label>
+                                        <input type="text" class="form-control" value="{{ $pesanan->nama_pelanggan }}" readonly>
+                                    </div>
+                                @elseif ($pesanan->jenis_pesanan == 'Delivery')    
+                                    <div class="form-group">
+                                        <label>Customer</label>
+                                        <input type="text" class="form-control" value="{{ $pesanan->user->name }}" readonly>
+                                    </div>
+                                    @endif
 
                                 <div class="form-group">
                                     <label>Tanggal Pesanan</label>
-                                    <input type="text" class="form-control" value="{{ $pesanan->tanggal_pesanan }}"
-                                        readonly>
+                                    <input type="text" class="form-control" value="{{ $pesanan->tanggal_pesanan }}" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Waktu Pesanan</label>
-                                    <input type="text" class="form-control" value="{{ $pesanan->waktu_pesanan }}"
-                                        readonly>
+                                    <input type="text" class="form-control" value="{{ $pesanan->waktu_pesanan }}" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Jenis Pesanan</label>
-                                    <input type="text" class="form-control" value="{{ $pesanan->jenis_pesanan }}"
-                                        readonly>
+                                    <input type="text" class="form-control" value="{{ $pesanan->jenis_pesanan }}" readonly>
                                 </div>
+
+ 
 
                                 <div class="form-group">
                                     <label>Metode Pembayaran</label>
-                                    <input type="text" class="form-control" value="{{ $pesanan->metode_pembayaran }}"
-                                        readonly>
+                                    <input type="text" class="form-control" value="{{ $pesanan->metode_pembayaran }}" readonly>
                                 </div>
 
                                 <div class="form-group">
@@ -59,25 +70,17 @@
                                     <label>Status Pesanan</label>
                                     <select name="status" class="form-control" required>
                                         @if (Auth::guard('user')->user()->role == 'Kasir')
-                                            <option value="Pending" {{ $pesanan->status == 'Pending' ? 'selected' : '' }}>
-                                                Pending</option>
+                                            <option value="Pending" {{ $pesanan->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                         @endif
                                         @if (Auth::guard('user')->user()->role == 'Kasir' || Auth::guard('user')->user()->role == 'Koki')
-                                            <option value="Processing"
-                                                {{ $pesanan->status == 'Processing' ? 'selected' : '' }}>
-                                                Processing</option>
+                                            <option value="Processing" {{ $pesanan->status == 'Processing' ? 'selected' : '' }}>Processing</option>
                                         @endif
-                                        @if (Auth::guard('user')->user()->role == 'Kasir' || Auth::guard('user')->user()->role == 'Pelayan' || Auth::guard('user')->user()->role == 'Koki')
-                                            <option value="Delivered"
-                                                {{ $pesanan->status == 'Delivered' ? 'selected' : '' }}>
-                                                Delivered</option>
+                                        @if (in_array(Auth::guard('user')->user()->role, ['Kasir', 'Pelayan', 'Koki']))
+                                            <option value="Delivered" {{ $pesanan->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
                                         @endif
-                                        <option value="Completed" {{ $pesanan->status == 'Completed' ? 'selected' : '' }}>
-                                            Completed</option>
+                                        <option value="Completed" {{ $pesanan->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                                         @if (Auth::guard('user')->user()->role == 'Kasir')
-                                            <option value="Cancelled"
-                                                {{ $pesanan->status == 'Cancelled' ? 'selected' : '' }}>
-                                                Cancelled</option>
+                                            <option value="Cancelled" {{ $pesanan->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                                         @endif
                                     </select>
                                 </div>

@@ -39,6 +39,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>No Pesanan</th>
                                                 <th>Nama Customer</th>
                                                 @if (Auth::guard('user')->user()->role === 'Pelayan')
                                                     <th>Alamat</th>
@@ -85,7 +86,19 @@
 
                                                 <tr class="{{ $rowClass }}">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $pesanan->user->name }}</td>
+                                                    <td>#{{ $pesanan->id }}</td>
+                                                    <td>
+                                                        @if ($pesanan->jenis_pesanan === 'Dine In')
+                                                            Meja {{ $pesanan->nomor_meja ?? '-' }}
+                                                        @elseif ($pesanan->jenis_pesanan === 'Take Away')
+                                                            {{ $pesanan->nama_pelanggan ?? '-' }}
+                                                        @elseif ($pesanan->jenis_pesanan === 'Delivery')
+                                                            {{ $pesanan->user->name ?? '-' }}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+
                                                     @if (Auth::guard('user')->user()->role === 'Pelayan')
                                                         <td>{{ $pesanan->user->detailUser->alamat }}</td>
                                                         <td>{{ $pesanan->user->detailUser->no_hp }}</td>

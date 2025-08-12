@@ -16,8 +16,7 @@
             font-size: 14px;
         }
 
-        h2,
-        h4 {
+        h2, h4 {
             text-align: center;
             margin: 0;
         }
@@ -75,29 +74,32 @@
 
 <body>
 
-
     <h2>Struk Pesanan</h2>
     <h4>Nomor Pesanan: #{{ $pesanan->id }}</h4>
 
-    <div class="section">
-        <div><span class="label">Nama Customer:</span> <span class="value">{{ $pesanan->user->name }}</span></div>
-        <div><span class="label">No HP:</span> <span class="value">{{ $pesanan->user->detailUser->no_hp ?? '-' }}</span>
+    {{-- Bagian customer --}}
+    @if ($pesanan->jenis_pesanan === 'Delivery')
+        <div class="section">
+            <div><span class="label">Nama Customer:</span> <span class="value">{{ $pesanan->user->name }}</span></div>
+            <div><span class="label">No HP:</span> <span class="value">{{ $pesanan->user->detailUser->no_hp ?? '-' }}</span></div>
+            <div><span class="label">Alamat:</span> <span class="value">{{ $pesanan->user->detailUser->alamat ?? '-' }}</span></div>
         </div>
-        <div><span class="label">Alamat:</span> <span
-                class="value">{{ $pesanan->user->detailUser->alamat ?? '-' }}</span></div>
-        {{-- <div><span class="label">Jenis Kelamin:</span> <span
-                class="value">{{ $pesanan->user->detailUser->jenis_kelamin ?? '-' }}</span></div> --}}
-        {{-- <div><span class="label">Tanggal Lahir:</span> <span class="value">{{ $pesanan->user->tanggal_lahir ?? '-' }}</span></div> --}}
-    </div>
+    @elseif ($pesanan->jenis_pesanan === 'Take Away')
+        <div class="section">
+            <div><span class="label">Nama Pelanggan:</span> <span class="value">{{ $pesanan->nama_pelanggan }}</span></div>
+        </div>
+    @elseif ($pesanan->jenis_pesanan === 'Dine In')
+        <div class="section">
+            <div><span class="label">Nomor Meja:</span> <span class="value">{{ $pesanan->nomor_meja }}</span></div>
+        </div>
+    @endif
 
+    {{-- Info pesanan --}}
     <div class="section">
-        <div><span class="label">Tanggal Pesanan:</span> <span class="value">{{ $pesanan->tanggal_pesanan }}</span>
-        </div>
+        <div><span class="label">Tanggal Pesanan:</span> <span class="value">{{ $pesanan->tanggal_pesanan }}</span></div>
         <div><span class="label">Waktu Pesanan:</span> <span class="value">{{ $pesanan->waktu_pesanan }}</span></div>
         <div><span class="label">Jenis Pesanan:</span> <span class="value">{{ $pesanan->jenis_pesanan }}</span></div>
-        <div><span class="label">Metode Pembayaran:</span> <span
-                class="value">{{ $pesanan->metode_pembayaran }}</span></div>
-        {{-- <div><span class="label">Status:</span> <span class="value">{{ $pesanan->status }}</span></div> --}}
+        <div><span class="label">Metode Pembayaran:</span> <span class="value">{{ $pesanan->metode_pembayaran }}</span></div>
         <div><span class="label">Catatan:</span> <span class="value">{{ $pesanan->catatan }}</span></div>
     </div>
 
@@ -123,17 +125,20 @@
         </tbody>
     </table>
 
+    {{-- Total --}}
     <div class="section">
-        <div><span class="label">Total Pesanan:</span> <span class="value">Rp
-                {{ number_format($pesanan->total_pesanan, 0, ',', '.') }}</span></div>
+        <div><span class="label">Total Pesanan:</span> 
+            <span class="value">Rp {{ number_format($pesanan->total_pesanan, 0, ',', '.') }}</span>
+        </div>
         @if ($pesanan->metode_pembayaran != 'qris')
-            <div><span class="label">Uang Diterima:</span> <span class="value">Rp
-                    {{ number_format($pesanan->uang_diterima, 0, ',', '.') }}</span></div>
+            <div><span class="label">Uang Diterima:</span> 
+                <span class="value">Rp {{ number_format($pesanan->uang_diterima, 0, ',', '.') }}</span>
+            </div>
         @endif
-        <div><span class="label">Tanggal Cetak:</span> <span
-                class="value">{{ \Carbon\Carbon::now()->format('d-m-Y H:i') }}</span></div>
+        <div><span class="label">Tanggal Cetak:</span> 
+            <span class="value">{{ \Carbon\Carbon::now()->format('d-m-Y H:i') }}</span>
+        </div>
     </div>
 
 </body>
-
 </html>

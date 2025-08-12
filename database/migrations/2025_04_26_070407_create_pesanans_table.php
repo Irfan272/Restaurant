@@ -12,12 +12,18 @@ return new class extends Migration {
     {
         Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+
             $table->date('tanggal_pesanan');
             $table->time('waktu_pesanan');
             $table->string('status');
             $table->string('jenis_pesanan');
             $table->integer('total_pesanan');
+
+            // Tambahan untuk masing-masing jenis pesanan
+            $table->string('nomor_meja')->nullable();        // untuk dine in
+            $table->string('nama_pelanggan')->nullable();    // untuk take away
+
 
             // Tambahan sesuai dengan controller
             $table->string('metode_pembayaran');

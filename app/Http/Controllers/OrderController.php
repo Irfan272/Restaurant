@@ -90,12 +90,14 @@ class OrderController extends Controller
             return redirect()->route('order.index')->with('status', 'Keranjang kosong!');
         }
 
-        // Validasi form
+        // Validasi dasar
         $request->validate([
             'jenis_pesanan' => 'required',
             'metode_pembayaran' => 'required',
-            'uang_diterima' => 'nullable', // uang_diterima hanya wajib untuk cash
+            'uang_diterima' => 'nullable', // hanya diperlukan jika metode cash
             'catatan' => 'nullable|string',
+            'nomor_meja' => 'required_if:jenis_pesanan,Dine In|nullable|string',
+            'nama_pelanggan' => 'required_if:jenis_pesanan,Take Away|nullable|string',
         ]);
 
         $totalKeseluruhan = 0;
@@ -103,8 +105,10 @@ class OrderController extends Controller
             $totalKeseluruhan += $item['harga'] * $item['jumlah'];
         }
 
-        // Ambil user yang sedang login
-        $userId = Auth::guard('user')->user()->id;
+        // Ambil user_id hanya jika jenis delivery
+        $userId = $request->jenis_pesanan === 'Delivery'
+            ? Auth::guard('user')->user()->id
+            : null;
 
         // Simpan pesanan
         $pesanan = Pesanan::create([
@@ -115,8 +119,10 @@ class OrderController extends Controller
             'jenis_pesanan' => $request->jenis_pesanan,
             'total_pesanan' => $totalKeseluruhan,
             'metode_pembayaran' => $request->metode_pembayaran,
-            'uang_diterima' => $this->convertRupiahToInt($request->uang_diterima), // parsing uang diterima
+            'uang_diterima' => $this->convertRupiahToInt($request->uang_diterima),
             'catatan' => $request->catatan,
+            'nomor_meja' => $request->jenis_pesanan === 'Dine In' ? $request->nomor_meja : null,
+            'nama_pelanggan' => $request->jenis_pesanan === 'Take Away' ? $request->nama_pelanggan : null,
         ]);
 
         // Simpan detail pesanan

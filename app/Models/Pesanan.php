@@ -15,6 +15,8 @@ class Pesanan extends Model
         'waktu_pesanan',
         'status',
         'jenis_pesanan',
+        'nomor_meja',
+        'nama_pelanggan',
         'total_pesanan',
         'metode_pembayaran',
         'uang_diterima',

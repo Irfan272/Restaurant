@@ -10,7 +10,7 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        return view("laporan.index");
+        return view("laporan.penjualan.index");
     }
 
     public function printPenjualan($tanggal_awal, $tanggal_akhir)
@@ -26,7 +26,7 @@ class LaporanController extends Controller
         $jumlah_total = $pesanan->sum('total_pesanan');
         $tanggal_cetak = Carbon::today()->format('d-m-Y');
 
-        return view('laporan.cetak', compact('pesanan', 'jumlah_total','total', 'tanggal_mulai', 'tanggal_terakhir', 'tanggal_cetak'));
+        return view('laporan.penjualan.cetak', compact('pesanan', 'jumlah_total','total', 'tanggal_mulai', 'tanggal_terakhir', 'tanggal_cetak'));
     }
 
 }

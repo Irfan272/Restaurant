@@ -18,11 +18,27 @@
                     <div class="x_content">
 
                         <form>
+                            {{-- Tampilkan data sesuai jenis_pesanan --}}
+                            @php
+                                $jenis = strtolower($pesanan->jenis_pesanan);
+                            @endphp
 
-                            <div class="form-group">
-                                <label>Customer</label>
-                                <input type="text" class="form-control" value="{{ $pesanan->user->name }}" disabled>
-                            </div>
+                            @if ($jenis === 'Dine In')
+                                <div class="form-group">
+                                    <label>Nomor Meja</label>
+                                    <input type="text" class="form-control" value="{{ $pesanan->nomor_meja }}" disabled>
+                                </div>
+                            @elseif ($jenis === 'Take Away')
+                                <div class="form-group">
+                                    <label>Nama Pelanggan</label>
+                                    <input type="text" class="form-control" value="{{ $pesanan->nama_pelanggan }}" disabled>
+                                </div>
+                            @elseif ($jenis === 'Delivery')
+                                <div class="form-group">
+                                    <label>Customer</label>
+                                    <input type="text" class="form-control" value="{{ $pesanan->user->name ?? '-' }}" disabled>
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label>Tanggal Pesanan</label>
@@ -77,12 +93,12 @@
                             </thead>
                             <tbody>
                                 @foreach($pesanan->detailPesanan as $index => $detail)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $detail->menu->nama_menu ?? 'Menu Tidak Ditemukan' }}</td>
-                                    <td>{{ $detail->jumlah }}</td>
-                                    <td>Rp {{ number_format($detail->total, 0, ',', '.') }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $detail->menu->nama_menu ?? 'Menu Tidak Ditemukan' }}</td>
+                                        <td>{{ $detail->jumlah }}</td>
+                                        <td>Rp {{ number_format($detail->total, 0, ',', '.') }}</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
